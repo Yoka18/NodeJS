@@ -4,4 +4,17 @@
     <div>
         <%= desc %>
     </div>
+
+
+    <% if(session.username) { %>
+        <a href="/auth/logout">Cikis Yap</a>
+    <% } else {%>
+        <a href="/auth/login">Giris Yap</a>
+    <% } %>
+
+
+    <pre>
+        <%= JSON.stringify(session, null, 2) %>
+    </pre>
+
 </div>

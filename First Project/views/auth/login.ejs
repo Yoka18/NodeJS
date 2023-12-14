@@ -1,0 +1,13 @@
+<h1>Giriş Yap</h1>
+
+<% if(typeof error !== 'undefined') { %>
+    <div style="background-color: red; color: white; padding: 5px;">
+        <%= error %>
+    </div>
+<% } %>
+
+<form action="/auth/login" method="post">
+    <input type="text" name="username" id="username" value="<%= typeof formData !== "undefined" ? formData.username : '' %>">
+    <input type="password" name="password" id="password">
+    <button type="submit">Giriş yap</button>
+</form>
