@@ -1,4 +1,5 @@
 import { validationResult } from "express-validator"
+import slugify from "slugify"
 
 export const getRegisterController = (req, res) =>{
     res.render('auth/register')
@@ -8,16 +9,25 @@ export const postRegisterController = (req, res) => {
     res.locals.formData = req.body
     const errors = validationResult(req);
 
-/*
-    if(!errors.isEmpty()){
-        return res.status(400).json({
+    // hata yoksa
+    if(errors.isEmpty()){
+        let avatar = req.files.avatar;
+        let path = 'uploads/' + Date.now() + slugify(avatar.name);
+        avatar.mv(path, (err) => {
+            if(err){
+                return res.status(500).send(err)
+            }
+
+            console.log('Kayıt başarılı')
+            res.render('auth/register', {
+                errors: errors.array()
+            })
+        })
+    } else {
+        res.render('auth/register', {
             errors: errors.array()
         })
     }
-*/
-    res.render('auth/register', {
-        errors: errors.array()
-    })
 }
 
 

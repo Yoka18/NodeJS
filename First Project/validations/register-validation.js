@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, check } from "express-validator";
 
 
 export const registerValidation = () => [
@@ -22,4 +22,24 @@ export const registerValidation = () => [
         }
         return true;
     }),
+
+    check('avatar')
+    .custom((value, {req}) => {
+        if(!req.files || Object.keys(req.files).length === 0){
+            throw new Error("Profil resmi yüklemelisiniz")
+        }
+
+        const allowedExtensions = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
+        const profileImage = req.files.avatar;
+        if(!allowedExtensions.includes(profileImage.mimetype)){
+            throw new Error('Profil resmi uzantısı geçersiz')
+        }
+        
+        if(profileImage.size > 5 * 512 * 512){
+            throw new Error('Profil resmi boyutu 5MB dan büyük olamaz')
+        }
+
+        return true;
+
+    })
 ]

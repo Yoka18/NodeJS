@@ -3,6 +3,7 @@ import path from "path";
 import expressLayouts from "express-ejs-layouts";
 import dotenv from "dotenv";
 import session from "express-session";
+import fileUpload from "express-fileupload";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.set('layout', 'layouts/layout');
 app.use(express.urlencoded( { extended:true } ));
 app.use(express.json());
 app.use(expressLayouts);
+app.use(fileUpload());
 
 
 app.use(
